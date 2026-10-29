@@ -291,6 +291,6 @@ function getTotal(products: Product[]): number {
 }
 async function loadProducts(): Promise<Product[]> {
   const res = await fetch('/api/products');
-```
   return res.json();
 }
+```
