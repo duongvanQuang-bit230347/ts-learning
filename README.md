@@ -24,6 +24,7 @@ Trả lời:
 ?.: Truy cập thuộc tính an toàn khi đối tượng có thể là null hoặc undefined
 ??: Cung cấp giá trị mặc định khi giá trị bên trái là null hoặc undefined
 ví dụ :
+```ts
 interface User {
   name: string;
   address?: {
@@ -36,6 +37,7 @@ const user: User = {
 console.log(user.address?.city); nó sẽ ra undefined
 const city = user.address?.city ?? "Hà Nội";
 console.log(city);
+```
 ## Phần 2: Hệ thống kiểu (so sánh với Java)
 
 ### 2.1. Structural typing là gì? Cho ví dụ hai kiểu khác tên nhưng vẫn gán được cho nhau. Java xử lý trường hợp này thế nào?
@@ -43,6 +45,7 @@ console.log(city);
 Trả lời:
 Structural typing là cơ chế kiểm tra kiểu dữ liệu dựa trên cấu trúc, thuộc tính của đối tượng
 Ví dụ :
+```ts
 interface User {
   id: number;
   name: string;
@@ -56,6 +59,7 @@ const customer: Customer = {
   name: "Quang"
 };
 const user: User = customer;
+```
 Java thì không cho phép gắn dù kiểu giống nhau muốn gắn được thì cần dùng extends,implements và xem quan hệ có hợp lý không
 ### 2.2. Union type là gì? Với một biến kiểu `string | number`, làm sao biết lúc chạy nó đang là kiểu nào?
 
@@ -68,6 +72,7 @@ Lúc đang chạy thì sẽ dùng typeof để kiểm tra kiểu dữ liệu c�
 Trả lời:
 Discriminated union là union type mà các kiểu thành viên có chung một thuộc tính dùng để phân biệt
 Ví dụ :
+```ts
 type Order =
   | {
       status: "pending";
@@ -96,6 +101,7 @@ function handleOrder(order: Order) {
       break;
   }
 }
+```
 ### 2.4. Vì sao trong TypeScript hiện đại, nhiều người dùng union of literals (ví dụ `'S' | 'M' | 'L'`) thay cho `enum`?
 
 Trả lời: vì Union of literals đơn giản, gọn và không tạo thêm object JavaScript ở runtime
@@ -110,17 +116,20 @@ Trả lời: Không tồn tại ở runtime . Trong java thì thông tin của c
 ### 3.1. Viết một hàm generic `first<T>(arr: T[])` trả về phần tử đầu tiên của mảng. Kiểu trả về nên là gì?
 
 Trả lời:
+```ts
 function first<T>(arr: T[]): T | undefined {
   return arr[0];
 }
 console.log(first<number>([1, 2, 3])); 
 console.log(first<string>(["A", "B"]));
 console.log(first([]));
+```
 Kiểu trả về nên là T | undefined
 ### 3.2. Cú pháp `<T extends ...>` dùng để làm gì? Cho ví dụ.
 
 Trả lời: extends trong generic dùng để giới hạn kiểu dữ liệu được truyền vào, yêu cầu kiểu đó phải đáp ứng một cấu trúc
 Ví dụ : 
+```ts
 interface HasId {
   id: number;
 }
@@ -132,6 +141,7 @@ const user = {
   name: "Quang"
 };
 console.log(getId(user));
+```
 ### 3.3. Khi viết API cập nhật sản phẩm (chỉ gửi lên những trường cần sửa), em sẽ định nghĩa kiểu dữ liệu đầu vào thế nào? Dùng utility type nào?
 
 Trả lời: 
@@ -151,6 +161,7 @@ Khi gặp await, hàm async tạm dừng, nhưng không chặn toàn bộ JavaSc
 Trả lời:
 Khi quên await, ta nhận về một Promise thay vì giá trị đã được giải quyết
 Ví dụ : 
+```ts
 async function getNumber(): Promise<number> {
   return 100;
 }
@@ -162,16 +173,17 @@ async function main() {
   console.log(result);
 }
 main();
+```
 ### 4.3. Xử lý lỗi trong hàm `async` như thế nào?
 
 Trả lời: xử lý lỗi e sử dụng try/catch kết hợp await
-
 
 ## Phần 5: Thực hành
 
 ### 5.1. Khai báo kiểu props cho một component React `ProductList` nhận vào danh sách sản phẩm và một hàm `onSelect` được gọi khi chọn một sản phẩm.
 
 Trả lời:
+```ts
 interface Product {
   id: number;
   name: string;
@@ -200,9 +212,11 @@ function ProductList({
     </div>
   );
 }
+```
 ### 5.2. Khai báo kiểu cho body của request `POST /products` trong Express, và viết handler sử dụng kiểu đó.
 
 Trả lời:
+```ts
 import express, { Request, Response } from "express";
 const app = express();
 app.use(express.json());
@@ -241,7 +255,7 @@ app.post(
     res.status(201).json(product);
   }
 );
-
+```
 ### 5.3. Đoạn code dưới đây có lỗi gì? Sửa lại cho đúng.
 
 ```ts
