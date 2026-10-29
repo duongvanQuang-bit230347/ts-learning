@@ -263,6 +263,7 @@ async function loadProducts(): Product[] { // sai ở đây vì hàm có async l
 
 Trả lời:
 Sửa lại 
+```ts
  interface Product {
   id: number;
   name: string;
@@ -276,5 +277,6 @@ function getTotal(products: Product[]): number {
 }
 async function loadProducts(): Promise<Product[]> {
   const res = await fetch('/api/products');
+```
   return res.json();
 }
