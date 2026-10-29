@@ -147,6 +147,18 @@ console.log(getId(user));
 Trả lời: 
 Em sẽ định nghĩa kiểu dữ liệu đầu vào cho tất cả các thuộc tính của sản phẩm đều là optional
 Em sẽ sử dụng Partial<T> để biến tất cả thuộc tính của một kiểu thành optional.
+Ví dụ : 
+```ts
+interface Product {
+  id: number;
+  name: string;
+  price: number;
+}
+type UpdateProductDto = Partial<Omit<Product, "id">>;
+const data: UpdateProductDto = {
+  price: 200000
+};
+```
 ## Phần 4: Bất đồng bộ
 
 ### 4.1. `async/await` hoạt động thế nào? JavaScript chạy một luồng thì làm sao xử lý được nhiều request cùng lúc?
@@ -175,9 +187,21 @@ async function main() {
 main();
 ```
 ### 4.3. Xử lý lỗi trong hàm `async` như thế nào?
-
 Trả lời: xử lý lỗi e sử dụng try/catch kết hợp await
+Ví dụ : 
+async function loadProducts() {
+  try {
+    const res = await fetch("/api/products");
 
+    if (!res.ok) {
+      throw new Error("API bị lỗi");
+    }
+    return await res.json();
+  } catch (error) {
+    console.error("Lỗi:", error);
+    throw error;
+  }
+}
 ## Phần 5: Thực hành
 
 ### 5.1. Khai báo kiểu props cho một component React `ProductList` nhận vào danh sách sản phẩm và một hàm `onSelect` được gọi khi chọn một sản phẩm.
